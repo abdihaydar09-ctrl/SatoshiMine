@@ -250,16 +250,7 @@
         return;
       }
 
-      // Basic format check only; this does not verify an address on-chain.
-      const looksLikeBtc =
-        /^(bc1[ac-hj-np-z02-9]{11,71}|[13][a-km-zA-HJ-NP-Z1-9]{25,34})$/.test(address);
-
-      result.textContent = looksLikeBtc
-        ? "The address resembles a Bitcoin address format. It is NOT verified."
-        : "This does not match a common Bitcoin address format. Check it carefully.";
-
-      log("Local address-format check completed. No wallet was connected.");
-    });async function loadBitcoinPrice() {
+      async function loadBitcoinPrice() {
   const priceEl = document.getElementById("btcPrice");
   const statusEl = document.getElementById("btcPriceStatus");
 
