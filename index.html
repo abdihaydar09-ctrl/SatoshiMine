@@ -259,7 +259,42 @@
         : "This does not match a common Bitcoin address format. Check it carefully.";
 
       log("Local address-format check completed. No wallet was connected.");
-    });
+    });async function loadBitcoinPrice() {
+  const priceEl = document.getElementById("btcPrice");
+  const statusEl = document.getElementById("btcPriceStatus");
+
+  priceEl.textContent = "Loading…";
+  statusEl.textContent = "Requesting public market data…";
+
+  try {
+    const response = await fetch(
+      "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
+    );
+
+    if (!response.ok) throw new Error("Price service unavailable");
+
+    const data = await response.json();
+    const price = data.bitcoin.usd;
+
+    priceEl.textContent = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 0
+    }).format(price);
+
+    statusEl.textContent =
+      "Public market price in USD. Not mining earnings.";
+  } catch (error) {
+    priceEl.textContent = "Unavailable";
+    statusEl.textContent =
+      "Price couldn't load. Try again later; demo timer still works.";
+  }
+}
+
+document.getElementById("refreshPrice")
+  .addEventListener("click", loadBitcoinPrice);
+
+loadBitcoinPrice();
   </script>
 </body>
 </html>
