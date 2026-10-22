@@ -119,17 +119,15 @@
       All demo metrics are illustrative, not earnings.
     </div>
 
-    <section class="hero">
-      <span class="pill">● SYSTEM STATUS: DEMO</span>
-      <h2>Your mining overview</h2>
-      <p>Monitor the demo timer and explore the dashboard interface.</p>
-      <div class="actions">
-        <button class="primary" id="start">Start demo timer</button>
-        <button class="secondary" id="stop" disabled>Stop timer</button>
-      </div>
-      <div class="sub" id="timerStatus" style="margin-top:14px">
-        Demo timer is stopped.
-      </div>
+    <section class="card" style="margin-bottom:18px">
+  <div class="label">Live Bitcoin market price</div>
+  <div class="value orange" id="btcPrice">Loading…</div>
+  <div class="sub" id="btcPriceStatus">
+    Fetching public market data. This is not mining income.
+  </div>
+  <button class="secondary" id="refreshPrice" style="margin-top:12px">
+    Refresh price
+  </button>
     </section>
 
     <section class="grid" aria-label="Dashboard metrics">
