@@ -1,0 +1,426 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101114">
+  <title>SatoshiMine | BTC Dashboard</title>
+  <style>
+    :root {
+      --bg: #101114;
+      --panel: #191b20;
+      --border: #30323a;
+      --orange: #f7931a;
+      --text: #f5f5f5;
+      --muted: #a4a6af;
+      --green: #53d69a;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    header {
+      padding: 20px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 19px;
+    }
+
+    .coin {
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      background: var(--orange);
+      color: #111;
+      border-radius: 12px;
+      font-size: 24px;
+    }
+
+    .demo {
+      color: var(--orange);
+      border: 1px solid #805019;
+      padding: 4px 9px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    main {
+      max-width: 760px;
+      margin: auto;
+      padding: 22px 16px 40px;
+    }
+
+    .intro { margin-bottom: 22px; }
+
+    h1 {
+      font-size: clamp(26px, 7vw, 36px);
+      margin: 0 0 5px;
+      letter-spacing: -1px;
+    }
+
+    h2 { font-size: 17px; margin: 0 0 14px; }
+
+    p { color: var(--muted); margin: 6px 0; }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      padding: 19px;
+      margin-bottom: 16px;
+    }
+
+    .balance {
+      font-size: clamp(28px, 8vw, 39px);
+      font-weight: 800;
+      margin: 8px 0;
+      overflow-wrap: anywhere;
+    }
+
+    .tag {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .stat {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 15px;
+      border-radius: 14px;
+      min-width: 0;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 7px;
+    }
+
+    .stat-value {
+      font-size: 17px;
+      font-weight: 750;
+      overflow-wrap: anywhere;
+    }
+
+    .status { color: var(--orange); }
+    .green { color: var(--green); }
+
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 13px 17px;
+      font-size: 14px;
+      font-weight: 750;
+      cursor: pointer;
+    }
+
+    .primary {
+      background: var(--orange);
+      color: #17120a;
+    }
+
+    .secondary {
+      background: #30323a;
+      color: white;
+      border: 1px solid #454751;
+    }
+
+    button:disabled {
+      opacity: .45;
+      cursor: not-allowed;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      margin: 14px 0 7px;
+      color: #dedfe4;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      border-radius: 10px;
+      border: 1px solid #454751;
+      background: #111216;
+      color: white;
+      font-size: 14px;
+    }
+
+    input:focus {
+      outline: 2px solid var(--orange);
+      outline-offset: 2px;
+    }
+
+    .notice {
+      padding: 13px;
+      background: #282116;
+      border: 1px solid #63461f;
+      border-radius: 11px;
+      color: #f3d4a5;
+      font-size: 12px;
+      margin-top: 14px;
+    }
+
+    .message {
+      font-size: 13px;
+      margin-top: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    .history {
+      color: var(--muted);
+      font-size: 13px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 20px 0 8px;
+    }
+
+    @media (max-width: 360px) {
+      header { padding: 14px 10px; }
+      main { padding: 18px 10px; }
+      .panel { padding: 14px; }
+      .grid { gap: 8px; }
+      .stat { padding: 11px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="coin">₿</div>
+      <span>SatoshiMine</span>
+    </div>
+    <span class="demo">DEMO MODE</span>
+  </header>
+
+  <main>
+    <section class="intro">
+      <h1>Mining dashboard</h1>
+      <p>Your Bitcoin dashboard, built for transparency.</p>
+    </section>
+
+    <section class="panel">
+      <div class="tag">DEMO BALANCE · NOT REAL BTC</div>
+      <div class="balance">0.00000000 BTC</div>
+      <p>No real mining rewards have been earned.</p>
+      <div class="notice">
+        This is a demonstration website. Your browser is not
+        mining Bitcoin. No real BTC is generated or available
+        to withdraw.
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="stat">
+        <div class="stat-label">Mining status</div>
+        <div class="stat-value status" id="status">Inactive</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Session uptime</div>
+        <div class="stat-value" id="uptime">00:00:00</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Real hashrate</div>
+        <div class="stat-value">Not connected</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Real earnings</div>
+        <div class="stat-value">0 BTC verified</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Mining controls</h2>
+      <p>Test the dashboard controls without using mining hardware.</p>
+      <div class="actions">
+        <button class="primary" id="start">Start demo</button>
+        <button class="secondary" id="stop" disabled>Stop demo</button>
+      </div>
+      <div class="message" id="miningMessage" aria-live="polite">
+        Demo is stopped.
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>BTC wallet</h2>
+      <p>Enter a public Bitcoin receiving address for the future payout feature.</p>
+
+      <label for="wallet">Bitcoin receiving address</label>
+      <input id="wallet" type="text" maxlength="90"
+        placeholder="Enter your BTC address"
+        autocomplete="off" spellcheck="false">
+
+      <div class="actions">
+        <button class="primary" id="checkWallet">Check address format</button>
+      </div>
+      <div class="message" id="walletMessage" aria-live="polite"></div>
+
+      <div class="notice">
+        Format checking is not blockchain verification.
+        Never enter a seed phrase or private key.
+        Real withdrawals are not available in this demo.
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Withdrawals</h2>
+      <div class="stat-label">Available to withdraw</div>
+      <div class="stat-value">0.00000000 BTC</div>
+      <div class="actions">
+        <button class="secondary" disabled>Withdraw BTC — unavailable</button>
+      </div>
+      <p>Withdrawals require verified mining rewards, a secure
+        backend, available funds and transaction-fee handling.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Transaction history</h2>
+      <div class="history">No real mining credits or withdrawals.</div>
+    </section>
+
+    <section class="panel">
+      <h2>Connect real mining</h2>
+      <p>
+        Real mining requires Bitcoin ASIC hardware or a legitimate
+        mining provider. A secure server must verify actual pool
+        rewards before the app can display earnings or issue payouts.
+      </p>
+      <p>Mining hardware: Not connected</p>
+      <p>Mining pool: Not connected</p>
+      <p>Real payout system: Not configured</p>
+    </section>
+
+    <footer>
+      SatoshiMine · Educational demo · No real mining or payouts
+    </footer>
+  </main>
+
+  <script>
+    const startButton = document.getElementById("start");
+    const stopButton = document.getElementById("stop");
+    const statusText = document.getElementById("status");
+    const uptimeText = document.getElementById("uptime");
+    const miningMessage = document.getElementById("miningMessage");
+
+    let running = false;
+    let startedAt = 0;
+    let elapsedBefore = 0;
+    let timer = null;
+
+    function formatTime(seconds) {
+      const hours = Math.floor(seconds / 3600);
+      const minutes = Math.floor((seconds % 3600) / 60);
+      const secs = seconds % 60;
+
+      return [hours, minutes, secs]
+        .map(n => String(n).padStart(2, "0"))
+        .join(":");
+    }
+
+    function updateUptime() {
+      const elapsed = elapsedBefore +
+        (running ? Math.floor((Date.now() - startedAt) / 1000) : 0);
+
+      uptimeText.textContent = formatTime(elapsed);
+    }
+
+    startButton.addEventListener("click", () => {
+      if (running) return;
+
+      running = true;
+      startedAt = Date.now();
+      statusText.textContent = "Demo running";
+      statusText.className = "stat-value green";
+      miningMessage.textContent =
+        "Demo timer running. No Bitcoin is being mined.";
+      startButton.disabled = true;
+      stopButton.disabled = false;
+
+      timer = setInterval(updateUptime, 1000);
+      updateUptime();
+    });
+
+    stopButton.addEventListener("click", () => {
+      if (!running) return;
+
+      elapsedBefore += Math.floor((Date.now() - startedAt) / 1000);
+      running = false;
+
+      clearInterval(timer);
+      timer = null;
+
+      statusText.textContent = "Inactive";
+      statusText.className = "stat-value status";
+      miningMessage.textContent =
+        "Demo stopped. No Bitcoin was generated.";
+      startButton.disabled = false;
+      stopButton.disabled = true;
+
+      updateUptime();
+    });
+
+    document.getElementById("checkWallet")
+      .addEventListener("click", () => {
+        const address = document.getElementById("wallet").value.trim();
+        const message = document.getElementById("walletMessage");
+
+        // Basic format check only. This does not verify a real address.
+        const validFormat =
+          /^(bc1[ac-hj-np-z02-9]{11,71}|[13][a-km-zA-HJ-NP-Z1-9]{25,34})$/
+            .test(address);
+
+        if (!address) {
+          message.textContent = "Enter a Bitcoin receiving address first.";
+        } else if (validFormat) {
+          message.textContent =
+            "The format looks plausible, but the address is not verified.";
+        } else {
+          message.textContent =
+            "This address format was not recognized. Check it carefully.";
+        }
+      });
+  </script>
+</body>
+</html>
+
